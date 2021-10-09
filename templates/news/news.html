@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+
+  <header class="page-header fit-mobile">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h1 class="separator">News Dashboard</h1>
+        {% if request.user.is_staff or request.user.is_superuser %}
+        <h1 class="separator"><a href="{% url 'news:add_news' %}">Add News</a></h1>
+        {% endif %}
+        <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">News Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-content container-fluid">
+    <div class="row">
+      {% for new  in news %}
+      <div class="col-sm-12 col-md-6 col-xl-3 d-flex align-items-stretch">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              {% if new.main_image.url != None %}
+              <img style="width:400px; height:100px" class="card-img img-fluid mb-4" src="{{new.main_image.url}}" alt="Card image cap">
+              {% else %}
+              <p>no image </p>
+              {% endif %}
+              <h4 class="card-title">{{new.title|truncatechars:25}}</h4>
+              <p class="card-text">{{new.mini_detail|truncatechars:50}}</p>
+              <a href="{% url 'news:news_detail' new.id %}" class="btn btn-primary">Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+</div>
+{% endblock content %}

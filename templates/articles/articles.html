@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+  <header class="page-header fit-mobile">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h1 class="separator">Articles Dashboard</h1>
+        <h1 class="separator"><a href="{% url 'articles:add_article' %}">Add article</a></h1>
+
+        <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Articles Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-content container-fluid">
+    <div class="row">
+      {% for article in articles %}
+      <div class="col-sm-12 col-md-6 col-xl-3 d-flex align-items-stretch">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              {% if article.image.url != None %}
+              <img style="width:100%; height:100px" class="card-img img-fluid mb-4" src="{{article.image.url}}"
+                   alt="Card image cap">
+              {% else %}
+              <p>no image </p>
+              {% endif %}
+
+              {% if article.user.first_name %}
+              <h4 class="card-title">Author: {{article.user.first_name}} {{article.user.last_name}}</h4>
+              {% else %}
+              <h4 class="card-title">Author: {{article.user.username}}</h4>
+              {% endif %}
+
+              <h4 class="card-title">{{article.title|truncatechars:25}}</h4>
+              <p class="card-text">{{article.mini_detail|truncatechars:50}}</p>
+              <a href="{% url 'articles:article_detail' article.id %}" class="btn btn-primary">Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div data-pym-src="https://www.jdoodle.com/embed/v0/2IhG?stdin=1&arg=0"></div>
+    </div>
+  </section>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script src=”https://www.jdoodle.com/assets/jdoodle-pym.min.js” type=”text/javascript”></script>
+{% endblock javascript %}

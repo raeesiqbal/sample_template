@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<header class="page-header fit-mobile">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h1 class="separator">Article Details</h1>
+
+      {% if request.user.id == article.user.id %}
+      <h1 class="separator"><a href="{% url 'articles:edit_article' article.id %}">Edit Article</a></h1>
+      <h1 class="separator"><a href="{% url 'articles:delete_article' article.id %}">Delete Article</a></h1>
+      {% endif %}
+
+      <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+          <li class="breadcrumb-item active" aria-current="page">Detail Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<section class="page-content container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header">{{article.title}}</h5>
+
+        <div class="card-body">
+          {% if article.image.url != None %}
+          <img style="width:600px; height:400px" src="{{article.image.url}}" alt=""
+               class="float-left rounded m-r-30 m-b-30">
+          {% else %}
+          <p>no image</p>
+          {% endif %}
+          <p>{{article.content|safe}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'articles/comments.html' with article_id=article.id %}
+</section>
+{% endblock content %}

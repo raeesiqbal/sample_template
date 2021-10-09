@@ -1,0 +1,135 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Register User | {% endblock title %}
+
+{% block content %}
+
+<div class="row" style="justify-content: center;">
+  <div class="col-lg-8 col-md-10 col-sm-12 col-12" data-aos="fade-left" >
+    <div id="account_card" class="card px-4 py-4 shadow">
+      <form action="{% url 'users:save_profile' %}" method="post" >
+        {% csrf_token %}
+      <div class="row align-items-center mb-5">
+        <div class="col-lg-10 col-md-10 col-sm-10">
+          <h2>Edit Details</h2>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2">
+          <button class="btn btn-primary" type="submit">
+            Save
+          </button>
+        </div>
+      </div>
+
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          First Name
+        </p>
+
+        <p class="col-8 mb-3">
+          <input required value="{{user.first_name}}" name="firstname" type="text" id="first_name" class="form-control"  placeholder="First Name">
+      </p>
+      </div>
+
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          Last Name
+        </p>
+
+        <p class="col-8 mb-3">
+          <input required value="{{user.last_name}}" name="last_name" type="text" id="last_name" class="form-control"  placeholder="Last Name">
+        </p>
+      </div>
+
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          User Type
+        </p>
+
+        <p class="col-8 mb-3">
+            <select name="user_type" id="user_type" class="form-control" onchange="usertype();">
+              {% if user.usertype == None %}
+              <option value="" selected>Choose...</option>
+              <option value="teacher">teacher</option>
+              <option value="student">student</option>
+              <option value="other">other</option>
+              {% elif user.usertype == 'teacher'  %}
+              <option value="{{user.usertype}}" selected>{{user.usertype}}</option>
+              <option value="student">student</option>
+              <option value="other">other</option>
+              {% elif user.usertype == 'student' %}
+              <option value="{{user.usertype}}" selected>{{user.usertype}}</option>
+              <option value="teacher">teacher</option>
+              <option value="other">other</option>
+              {% else %}
+              <option value="{{user.usertype}}" selected>{{user.usertype}}</option>
+              <option value="teacher">teacher</option>
+              <option value="student">student</option>
+              {% endif %}
+            </select>
+        </p>
+      </div>
+
+      <div class="" id="subject">
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          Choose Subject
+        </p>
+
+        <p class="col-8 mb-3">
+					<select required name="topic" id="topic" class="form-control">
+            {% if user.usertype != 'teacher' %}
+            <option value='choose' selected>Choose...</option>
+            {% else %}
+            <option value="{{user.topic.id}}" selected>{{user.topic}}</option>
+            {% endif %}
+						{% for topic in topics %}
+            <option value="{{topic.id}}">{{topic.title}}</option>
+						{% endfor %}
+					</select>
+        </p>
+      </div>
+      </div>
+
+      </form>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script>
+function usertype() {
+  var usertype = document.querySelector('#user_type');
+  if (usertype.options[usertype.selectedIndex].value == 'teacher') {
+    document.querySelector('#subject').style.display = 'block';
+  } else {
+    document.querySelector('#subject').style.display = 'none';
+  }
+}
+
+$(document).ready(function () {
+
+  var usertype = document.querySelector('#user_type');
+  if (usertype.options[usertype.selectedIndex].value == 'teacher') {
+    document.querySelector('#subject').style.display = 'block';
+  } else {
+    usertype.options[usertype.selectedIndex].value = '';
+    document.querySelector('#subject').style.display = 'none';
+  }
+
+  $('#teacher').click(function () {
+      $('#subject').show();
+    });
+
+  $('#student').click(function () {
+      $('#subject').hide();
+    });
+
+  $('#other').click(function () {
+      $('#subject').hide();
+    });
+});
+</script>
+{% endblock javascript %}

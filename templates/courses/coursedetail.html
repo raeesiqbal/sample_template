@@ -1,0 +1,141 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<header class="page-header fit-mobile">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h1 class="separator">Course Details</h1>
+      {% if request.user.id == course.user.id %}
+      <h1 class="separator"><a href="{% url 'courses:edit_course' course.id %}">Edit course</a></h1>
+      <h1 class="separator"><a href="{% url 'courses:delete_course' course.id %}">Delete course</a></h1>
+      <h1 class="separator"><a href="{% url 'courses:add_video' course.id %}">Add Video</a></h1>
+      {% endif %}
+
+      <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+          <li class="breadcrumb-item active" aria-current="page">Detail Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<section class="page-content container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <h5 class="card-header">{{course.course_title}}</h5>
+
+        <div class="card-body">
+          {% if course.image.url != None %}
+          <img style="width:600px; height:400px" src="{{course.image.url}}" alt=""
+               class="float-left rounded m-r-30 m-b-30">
+          {% else %}
+          <p>no image </p>
+          {% endif %}
+          <p>{{course.content|safe}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-content container-fluid">
+    <div class="row">
+      <div class="col-lg-8 col-sm-12 col-md-8 col-xl-8">
+        <div class="card">
+          <h5 class="card-header">Course Syllabus</h5>
+          <div class="card-body">
+            <p>{{course.syllabus|safe}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-sm-12 col-md-4 col-xl-4">
+        <div class="card-deck">
+          <div class="card">
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-body p-t-10">
+                      <p class="mb-0 d-inline">Institute Name</p>
+                      <span class="badge badge-pill badge-primary float-right">{{course.course_institute}} </span>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-body p-t-10">
+                      <p class="mb-0 d-inline">Course length</p>
+                      <span class="badge badge-pill badge-primary float-right">{{course.length}} Months</span>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-body p-t-10">
+                      <p class="mb-0 d-inline">Course Level</p>
+                      <span class="badge badge-pill badge-primary float-right">{{course.level}} </span>
+                    </div>
+                  </div>
+                </li>
+
+                <li class="list-group-item">
+                  <div class="media">
+                    <div class="media-body p-t-10">
+                      <p class="mb-0 d-inline">Course Price</p>
+                      <span class="badge badge-pill badge-primary float-right">{{course.price}} </span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% for i in youtube_video %}
+    <div class="col-sm-12 col-md-6 col-xl-6">
+      <div class="card text-white">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{i.video}}" allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <div style="margin-top:20px;" class="row">
+      {% for v in video %}
+      <div class="col-sm-12 col-md-6 col-xl-6">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <h4 class="card-title">{{v.course.course_title}}</h4>
+              <h6 class="card-subtitle text-muted">{{v.course.course_institute}}</h6>
+            </div>
+
+            <div class="embed-responsive embed-responsive-16by9">
+              <video controls style="position:absolute;top:0;left:0;width:100%;height:100%;" allowfullscreen>
+                <source src="{{v.video.url}}" type='video/mp4'>
+              </video>
+            </div>
+
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{v.video_title}}</li>
+              {% if request.user == v.course.user %}
+              <a href="{% url 'courses:delete_video' v.id course.id %}" class="btn btn-primary">Delete Video</a>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</section>
+{% endblock content %}

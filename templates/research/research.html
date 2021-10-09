@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+  <header class="page-header fit-mobile">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h1 class="separator">Research Hub</h1>
+        <h1 class="separator"><a href="{% url 'research:add_research' %}">Add Project</a></h1>
+        <h1 class="separator"><a href="{% url 'research:drop_idea' %}">Drop Idea</a></h1>
+
+        <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Research Hub</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-content container-fluid">
+    <div class="row">
+      {% for i in research %}
+      <div class="col-sm-12 col-md-6 col-xl-3 d-flex align-items-stretch">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <h4 class="card-title">{{i.title|truncatechars:25}}</h4>
+            </div>
+
+            <img style="width:100%; height:180px" class="img-fluid" src="{{i.main_image.url}}" alt="Card image cap">
+
+            <div class="card-body">
+              <p class="card-text">{{i.content|truncatechars:50 |safe}}</p>
+              <a href="{% url 'research:research_detail' i.id %}" class="btn btn-primary">Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock content %}

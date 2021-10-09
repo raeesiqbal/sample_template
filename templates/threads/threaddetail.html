@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<header class="page-header fit-mobile">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h1 class="separator">Thread Details</h1>
+
+      {% if request.user.id == thread.user.id %}
+      <h1 class="separator"><a href="{% url 'forums:edit_thread' thread.id %}">Edit Thread</a></h1>
+      <h1 class="separator"><a href="{% url 'forums:delete_thread' thread.id %}">Delete Thread</a></h1>
+      {% endif %}
+
+      <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+          <li class="breadcrumb-item active" aria-current="page">Detail Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<section class="page-content container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header">{{thread.title}}</h5>
+
+        <div class="card-body">
+          {% if thread.image.url != None %}
+          <img style="width:600px; height:400px" src="{{thread.image.url}}" alt=""
+               class="float-left rounded m-r-30 m-b-30">
+          {% else %}
+          <p>no image </p>
+          {% endif %}
+          <p>{{thread.content|safe}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'threads/comments.html' with thread_id=thread.id %}
+</section>
+{% endblock content %}

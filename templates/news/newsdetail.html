@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<header class="page-header fit-mobile">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h1 class="separator">News Details</h1>
+
+      {% if request.user.is_staff or request.user.is_superuser %}
+      <h1 class="separator"><a href="{% url 'news:edit_news' news.id %}">Edit News</a></h1>
+      <h1 class="separator"><a href="{% url 'news:delete_news' news.id %}">Delete News</a></h1>
+      <h1 class="separator"><a href="{% url 'news:add_news_video' news.id %}">Add Video</a></h1>
+      {% endif %}
+
+      <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+          <li class="breadcrumb-item active" aria-current="page">News Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<section class="page-content container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <h5 class="card-header">{{news.title}}</h5>
+
+        <div class="card-body">
+          {% if news.main_image.url != None %}
+          <img style="width:600px; height:400px" src="{{news.main_image.url}}" alt=""
+               class="float-left rounded m-r-30 m-b-30">
+          {% else %}
+          <p>no image </p>
+          {% endif %}
+          <p>{{news.content|safe}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;" class="row">
+    {% for n in newsmedia %}
+    <div class="col-sm-12 col-md-6 col-xl-6">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-header">
+            <h4 class="card-title">{{n.news.title}}</h4>
+          </div>
+
+          <div class="embed-responsive embed-responsive-16by9">
+            <video controls style="position:absolute;top:0;left:0;width:100%;height:100%;" allowfullscreen>
+              <source src="{{n.video.url}}" type='video/mp4'>
+            </video>
+          </div>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">{{n.video_title}}</li>
+            <a href="{% url 'news:delete_news_video' news.id n.id %}" class="btn btn-primary">Delete Video</a>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock content %}

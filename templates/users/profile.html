@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Register User | {% endblock title %}
+
+{% block content %}
+
+<div class="row" style="justify-content: center;">
+  <div class="col-lg-8 col-md-10 col-sm-12 col-12" data-aos="fade-left" >
+    <div id="account_card" class="card px-4 py-4 shadow">
+      <div class="row align-items-center mb-5">
+        <div class="col-lg-10 col-md-10 col-sm-10">
+          <h2>Account Details</h2>
+        </div>
+
+        <div class="col-lg-2 col-md-2 col-sm-2 text-right">
+          <a href="{% url 'users:edit' %}" class="btn btn-primary">
+            <i class="icon dripicons-pencil text-white"></i>
+            <span>Edit</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          User Name
+        </p>
+
+        <p class="col-8 mb-3">
+          {{user.username}}
+        </p>
+      </div>
+
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          First Name
+        </p>
+
+        <p class="col-8 mb-3">
+         {{user.first_name}}
+        </p>
+      </div>
+
+
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          Last Name
+        </p>
+
+        <p class="col-8 mb-3">
+        {{user.last_name}}
+        </p>
+      </div>
+
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          User Type
+        </p>
+
+        <p class="col-8 mb-3">
+          {{user.usertype}}
+        </p>
+      </div>
+
+      <div class="row align-items-center">
+        <p class="col-4 font-600 mb-3">
+          Email
+        </p>
+
+        <p class="col-8 mb-3">
+          {{user.email}}
+        </p>
+      </div>
+
+    </div>
+  </div>
+{% endblock content %}

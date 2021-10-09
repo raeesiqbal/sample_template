@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="page-content container-fluid">
+  <form action="{% url 'research:save_edit_research' research.id %}" method="post" , enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <h5 class="card-header">Add your Research Details</h5>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="title">Title</label>
+                <input value="{{research.title}}"  required name="title" type="text" class="form-control" id="title" placeholder="Title">
+              </div>
+              <div class="form-group col-6">
+                <label for="mainimage">Main image</label>
+                <input required name="mainimage" type="file" class="form-control-file btn-floating " id="mainimage">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="topic">Topic</label>
+                <select required name="topic" id="topic" class="form-control">
+                  <option value="" selected>Choose...</option>
+                  <option>{{research.topic.title}}</option>
+                  {% for topic in topics %}
+                  <option value="{{topic.title}}">{{topic.title}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="file">File if any</label>
+                <input name="file" type="file" class="form-control-file btn-floating " id="file">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-12">
+                <div class="card">
+                  <h5 class="card-header">Details</h5>
+                  <form>
+                    <div class="card-body">
+                      <form>
+                        <textarea name="editor1" id="editor1" class="cke_wrapper" rows="10" cols="80">
+                          {{research.content|safe}}
+                        </textarea>
+                      </form>
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+{% endblock content %}

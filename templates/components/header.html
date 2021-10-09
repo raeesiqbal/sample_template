@@ -1,0 +1,29 @@
+<header id="header" class="fixed-top header-transparent">
+  <div class="container d-flex align-items-center">
+    <div class="logo mr-auto">
+      <h2 class="text-light"><a href="{% url 'main:home' %}">Education Portal</a></h2>
+    </div>
+
+    <nav class="nav-menu d-none d-lg-block">
+      <ul>
+        {% if user.is_authenticated %}
+        <li class="{% if home %}active{% endif %}"><a href="{% url 'main:home' %}">Home</a></li>
+        <li class="{% if home %}active{% endif %}"><a href="{% url 'articles:article' %}">Articles</a></li>
+        <li class="{% if home %}active{% endif %}"><a href="{% url 'courses:course' %}">Courses</a></li>
+        <li class="{% if contact %}active{% endif %}"><a href="{% url 'news:news' %}">News</a></li>
+        <li class="{% if contact %}active{% endif %}"><a href="{% url 'forums:thread' %}">Forums</a></li>
+        <li class="{% if contact %}active{% endif %}"><a href="{% url 'research:research' %}">Research Hub</a></li>
+        <li class="{% if home %}active{% endif %}"><a href="{% url 'main:about' %}">About</a></li>
+        <li class="{% if contact %}active{% endif %}"><a href="{% url 'main:contact' %}">Contact Us</a></li>
+        <li class="{% if contact %}active{% endif %}"><a href="{% url 'users:profile' %}">Profile</a></li>
+        <li class="register"><a href="{% url 'users:logout' %}">Logout</a></li>
+        {% if request.user.is_staff or request.user.is_superuser %}
+        {% endif %}
+        {% else %}
+        <li class="login"><a href="{% url 'users:login' %}">Login</a></li>
+        <li class="register"><a href="{% url 'users:register' %}">Signup</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,115 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Register User | {% endblock title %}
+
+{% block content %}
+<div class="row" style="justify-content: center;">
+  <div class="col-lg-8 col-md-10 col-sm-12 col-12" data-aos="fade-left">
+    <div id="account_card" class="card px-4 py-4 shadow">
+      <form action="{% url 'users:save_profile' %}" method="post">
+        {% csrf_token %}
+
+        <div class="row align-items-center mb-5">
+          <div class="col-lg-10 col-md-10 col-sm-10">
+            <h2>Edit Details</h2>
+          </div>
+
+          <div class="col-lg-2 col-md-2 col-sm-2">
+            <button class="btn btn-primary" type="submi">
+              Save
+            </button>
+          </div>
+        </div>
+
+        <div class="row align-items-center">
+          <p class="col-4 font-600 mb-3">
+            First Name
+          </p>
+
+          <p class="col-8 mb-3">
+            <input required value="{{user.first_name}}" name="first_name" type="text" id="name" class="form-control"
+                   placeholder="First Name">
+          </p>
+        </div>
+
+        <div class="row align-items-center">
+          <p class="col-4 font-600 mb-3">Last Name</p>
+
+          <p class="col-8 mb-3">
+            <input required value="{{user.last_name}}" name="last_name" type="text" id="name" class="form-control"
+                   placeholder="Last Name">
+          </p>
+        </div
+        
+        <div class="row align-items-center">
+          <p class="col-4 font-600 mb-3"> User Type</p>
+
+          <p class="col-8 mb-3">
+            {% if user.usertype == 'student' %}
+            <input checked id="student" type="radio" name="user_type" value="Student">
+            {% else %}
+            <input id="student" type="radio" name="user_type" value="Student">
+            {% endif %}
+            <label class="mr-3" for="student">
+              Student
+            </label>
+
+            {% if user.usertype == 'teacher' %}
+            <input checked id="teacher" type="radio" name="user_type" value="teacher">
+            {% else %}
+            <input id="teacher" type="radio" name="user_type" value="teacher">
+            {% endif %}
+            <label class="mr-3" for="teacher">
+              Teacher
+            </label>
+
+            {% if user.usertype == 'other' %}
+            <input checked type="radio" name="user_type" id="other" value="Other">
+            {% else %}
+            <input type="radio" name="user_type" id="other" value="Other">
+            {% endif %}
+            <label for="other">
+              Other
+            </label>
+          </p>
+        </div>
+
+        <div class="row align-items-center subject">
+          <p class="col-4 font-600 mb-3">
+            Choose Subject
+          </p>
+
+          <p class="col-8 mb-3">
+            <label for="topic">Choose Subject</label>
+            <select required name="topic" id="topic" class="form-control">
+              {% for topic in topics %}
+              <option selected value="{{topic.id}}">{{topic.title}}</option>
+              {% endfor %}
+            </select>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endblock content %}
+
+  {% block javascript %}
+  <script>
+    $(document).ready(function () {
+      $(".subject").hide();
+
+      $("#teacher").click(function () {
+        $(".subject").show();
+      });
+
+      $("#student").click(function () {
+        $(".subject").hide();
+      });
+
+      $("#other").click(function () {
+        $(".subject").hide();
+      });
+    });
+  </script>
+  {% endblock javascript %}

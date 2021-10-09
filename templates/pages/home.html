@@ -1,0 +1,77 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block main %}
+<section id="hero" class="d-flex align-items-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1" data-aos="fade-up">
+        <div>
+
+          <h2 class="text-justify">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+            when an unknown printer took a galley of type and scrambled it to make a type
+            specimen book. It has survived not only five centuries, but also the leap into
+            electronic typesetting, remaining essentially unchanged. It was popularised in the
+            1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more
+            recently with desktop publishing software like Aldus PageMaker
+            including versions of Lorem Ipsum.
+          </h2>
+        </div>
+      </div>
+
+      <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-left" data-aos-delay="100">
+        <img src="{% static 'img/home_hero.jpg' %}" class="img-fluid" alt="" />
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main %}
+
+{% block content %}
+
+<section id="faq" class="faq section-bg">
+  <div class="container">
+    <div class="section-title">
+      <h2>Frequently Asked Questions</h2>
+      <p>
+        We are thrilled to be partnering with you as you participate in an exciting educational journey of discovery.
+      </p>
+    </div>
+
+    <div class="accordion-list">
+      <ul>
+        <li data-aos="fade-up" data-aos-delay="100">
+          <i class="bx bx-help-circle icon-help"></i>
+          <a data-toggle="collapse" href="#accordion-list-2" class="collapsed">What is the purpose of this E-Portal? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="accordion-list-2" class="collapse" data-parent=".accordion-list">
+            <p>
+              This Portal will help students by different courses, articles and discussion in forums.
+            </p>
+          </div>
+        </li>
+
+        <li data-aos="fade-up" data-aos-delay="200">
+          <i class="bx bx-help-circle icon-help"></i>
+          <a data-toggle="collapse" href="#accordion-list-3" class="collapsed"> How I learn with this Portal? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+          <div id="accordion-list-3" class="collapse" data-parent=".accordion-list">
+            <p>
+              You can learn by going through different courses and articles
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock content %} {% block javascript %}
+<script>
+  $("#started").click(() => {
+    $("#started").addClass("d-none");
+    $("#started").after(
+      "<div class='d-flex' data-aos='fade-up'><a href='{% url 'users:login' %}' class='design-btn mr-2 mb-2'>Logggin</a><a href='{% url 'users:register' %}?design=0' class='design-btn mb-2'>Signup</a></div>"
+    );
+  });
+</script>
+{% endblock javascript %}

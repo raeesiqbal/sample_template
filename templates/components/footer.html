@@ -1,0 +1,46 @@
+<footer id="footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-md-6 footer-contact" data-aos="fade-up">
+          <h3>My Education Portal</h3>
+
+          <p>
+            <strong>Phone:</strong> +1 1234 12345 12<br />
+            <strong>Email:</strong> info@example.com<br />
+          </p>
+        </div>
+
+        <div class="col-lg-4 col-md-6 footer-links" data-aos="fade-up" data-aos-delay="100">
+          <h4>Useful Links</h4>
+
+          <ul>
+            {% if user.is_authenticated %}
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'main:home' %}">Home</a> </li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'main:about' %}">About</a> </li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'main:contact' %}">Contact</a> </li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'courses:course' %}">Course</a> </li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'users:logout' %}">Logout</a> </li>
+
+            {% else %}
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'users:login' %}">Login</a> </li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'users:register' %}">Register</a> </li>
+            {% endif %}
+          </ul>
+        </div>
+
+
+        <div class="col-lg-4 col-md-6 footer-links" data-aos="fade-left" data-aos-delay="100">
+          <h4>Our Social Networks</h4>
+          <p>Connect us with your Social account</p>
+
+          <div class="social-links mt-3">
+            <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+            <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+            <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

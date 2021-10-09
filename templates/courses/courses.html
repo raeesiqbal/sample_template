@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+  <header class="page-header fit-mobile">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h1 class="separator">Courses Dashboard</h1>
+        <h1 class="separator"><a href="{% url 'courses:add_course' %}">Add Course</a></h1>
+
+        <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Courses Dashboard</li>
+            <li></li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-content container-fluid">
+    <div class="row">
+      {% for i in data %}
+      <div class="col-sm-12 col-md-6 col-xl-3 d-flex align-items-stretch">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-header">
+              <h4 class="card-title">{{i.course_title|truncatechars:25}}</h4>
+              <h6 class="card-subtitle text-muted">Institute: {{i.course_institute|truncatechars:25}}</h6>
+            </div>
+
+            <img style="width:100%; height:180px" class="img-fluid" src="{{i.image.url}}" alt="Card image cap">
+
+            <div class="card-body">
+              <p class="card-text">{{i.mini_detail}}</p>
+              <a href="{% url 'courses:course_detail' i.id %}" class="btn btn-primary">Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock content %}

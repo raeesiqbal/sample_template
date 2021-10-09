@@ -1,0 +1,78 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="card-deck">
+  <div class="card">
+    <h5 class="card-header">Browser Stats</h5>
+
+    <div class="card-body p-0">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="media">
+            <div class="media-body p-t-10">
+              <p class="mb-0 d-inline">Google Chrome</p>
+              <span class="badge badge-pill badge-primary float-right">32% </span>
+            </div>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="media">
+            <div class="media-body p-t-10">
+              <p class="mb-0 d-inline">Google Chrome</p>
+              <span class="badge badge-pill badge-primary float-right">32% </span>
+            </div>
+          </div>
+        </li>
+
+        <li class="list-group-item">
+          <div class="media">
+            <div class="media-body p-t-10">
+              <p class="mb-0 d-inline">Google Chrome</p>
+              <span class="badge badge-pill badge-primary float-right">32% </span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" id="barChartLineThree">
+    <h5 class="card-header">Overview</h5>
+
+    <div class="card-body">
+      <div class="row h-100">
+        <div class="col-4">
+          <div class="counter counter-md text-left">
+            <div class="f-w-400 ">USERS</div>
+            <div class="counter-number-group">
+              <span class="text-success">627,852 <i class="zmdi zmdi-trending-up font-size-14 text-success"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="counter counter-sm text-left inline-block">
+            <div class="f-w-400">NEW SESSIONS</div>
+            <div class="counter-number-group">
+              <span class="text-info">412,346 <i class="zmdi zmdi-trending-up font-size-14 text-info"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4">
+          <div class="counter counter-sm text-left inline-block">
+            <div class="f-w-400">BOUNCE RATE</div>
+            <div class="counter-number-group">
+              <span class="text-danger">17,555 <i class="zmdi zmdi-trending-down font-size-14 text-danger"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ct-chart line-chart h-300 mt-30"></div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

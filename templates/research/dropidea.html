@@ -1,0 +1,143 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<section class="page-content container-fluid">
+  <form action="{% url 'research:save_idea' %}" method="post" , enctype="multipart/form-data">
+    {% if message %}
+    <div style="text-align: center;" class="alert alert-danger" role="alert">
+     {{message}}
+    </div>
+    {% endif %}
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <h5 class="card-header">Add your Idea Details</h5>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="title">Title</label>
+                <input autocomplete="off" required name="title" type="text" class="form-control" id="title" placeholder="Title">
+              </div>
+              <div class="form-group col-6">
+                <label for="topic">Choose Topic</label>
+                <select required name="topic" id="topic" class="form-control" onchange="addteacher();">
+                  <option selected>Choose...</option>
+                  {% for topic in topics %}
+                  <option value="{{topic.title}}">{{topic.title}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div id="details">
+
+              <div id="m">
+                <div class="row" id="here">
+
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-12">
+                  <label for="editor1">Detail</label>
+                  <form>
+                    <div class="card-body">
+                      <form>
+                        <textarea name="editor1" id="editor1" class="cke_wrapper" rows="10" cols="80">
+                        </textarea>
+                      </form>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div id="related">
+              <h5 class="">Related Research</h5>
+              <div class="row" id="idea">
+
+              </div>
+            </div>
+
+            <button id="sub" type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+{% endblock content %}
+
+{% block javascript %}
+<script type="text/javascript">
+  window.onclick = myFunction;
+
+  function myFunction() {
+    var o = document.getElementById('title');
+    let i = $('*:focus').attr('id');
+    if (i == 'title') {
+      document.querySelector('#details').style.display = 'none';
+      document.querySelector('#sub').style.display = 'none';
+      document.querySelector('#related').style.display = 'block';
+    } else {
+      document.querySelector('#details').style.display = 'block';
+      document.querySelector('#related').style.display = 'none';
+      document.querySelector('#sub').style.display = 'block';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('#related').style.display = 'none';
+  });
+
+  document.querySelector('#title').addEventListener('keyup', function (event) {
+    const value = document.getElementById('title').value;
+    console.log(':', value);
+    document.querySelector('#idea').innerHTML = '';
+    fetch('/related_idea', {
+        method: 'POST',
+        body: JSON.stringify({
+          value: value,
+        }),
+      })
+      .then(response => response.json())
+      .then(result => {
+        result.forEach(function (entry, index) {
+          console.log(index);
+          const p = document.createElement('p');
+          p.className = 'r';
+          p.innerHTML = entry.title;
+          p.id = entry.id;
+          const div1 = document.createElement('div');
+          div1.className = 'col-2 rr';
+          div1.id = entry.id;
+          div1.append(p);
+          document.querySelector('#idea').append(div1);
+        });
+
+        console.log(result);
+      });
+
+  }, true);
+
+  document.getElementById('idea').onclick = button;
+
+  function button(e) {
+    if (e.target.tagName == 'P') {
+      fetch('/Ajax', {
+          method: 'POST',
+          body: JSON.stringify({
+            id: e.target.id,
+          }),
+        })
+        .then(response => response.json())
+        .then(result => {
+          window.location.href = result.url;
+        });
+    }
+
+  }
+</script>
+{% endblock javascript %}

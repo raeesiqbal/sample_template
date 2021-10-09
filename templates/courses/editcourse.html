@@ -1,0 +1,107 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="page-content container-fluid">
+  <form action="{% url 'courses:save_edit_course' course.id %}" method="post" , enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <h5 class="card-header">Add Course Details</h5>
+          <form>
+            <div class="card-body">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="title">Course Title</label>
+                  <input required value="{{course.course_title}}" name="title" type="title" class="form-control" id="title" placeholder="Title">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="institute">Institute Name</label>
+                  <input required value="{{course.course_institute}}" name="institute" type="text" class="form-control" id="institute" placeholder="Institute">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="subject">Subject</label>
+                  <select required name="subject" id="subject" class="form-control">
+                    <option value="">Choose...</option>
+                    {% for subject in subjects %}
+                    {% if course.subject == subject.subject_title %}
+                    <option selected value="{{subject.subject_title}}">{{subject.subject_title}}</option>
+                    {% else %}
+                    <option value="{{subject.subject_title}}">{{subject.subject_title}}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="length">Course Length in months</label>
+                  <input required value="{{course.length}}" name="length" type="title" class="form-control" id="length" placeholder="length">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="price">Price</label>
+                  <input required value="{{course.price}}" name="price" class="form-control" id="price" placeholder="Price">
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="minidetail">Mini Detail</label>
+                  <input value="{{course.mini_detail}}" required name="minidetail" class="form-control" id="minidetail" placeholder="minidetail">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="youtube">Youtube Video Id</label>
+                  {% if youtube_video != None %}
+                  <input value={{youtube_video.video}} name="youtube" class="form-control" id="youtube" placeholder="Youtube Video Id: tgbNymZ7vqY">
+                  {% else %}
+                  <input name="youtube" class="form-control" id="youtube" placeholder="Youtube Video Id: tgbNymZ7vqY">
+                  {% endif %}
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="level">Level</label>
+                  <select required name="level" id="level" class="form-control">
+                    <option value="">Choose...</option>
+                    <option value="intro">intro</option>
+                    <option value="middle">middle</option>
+                    <option value="expert">expert</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="mainimage">Main image</label>
+                  <input name="mainimage" type="file" class="form-control-file   btn-floating " id="mainimage">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <h5 class="card-header">Course Content</h5>
+                    <div class="card-body">
+                      <textarea required name="content" id="editor1" class="cke_wrapper" rows="10" cols="80">
+                      {{course.content|safe}}
+                      </textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <h5 class="card-header">Course Syllabus </h5>
+                    <div class="card-body">
+                      <textarea required name="syllabus" id="editor2" class="cke_wrapper" rows="10" cols="80">
+                      {{course.syllabus|safe}}
+                      </textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+  </form>
+</section>
+
+{% endblock content %}

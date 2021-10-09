@@ -1,0 +1,48 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="content">
+  <header class="page-header fit-mobile">
+    <div class="d-flex align-items-center">
+      <div class="mr-auto">
+        <h1 class="separator">Forums Dashboard</h1>
+        <h1 class="separator"><a href="{% url 'forums:add_thread' %}">Add Thread</a></h1>
+
+        <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+            <li class="breadcrumb-item active" aria-current="page">Forums Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <section class="page-content container-fluid">
+    <div class="row">
+      {% for thread in threads %}
+      <div class="col-sm-12 col-md-6 col-xl-3">
+        <div class="card">
+          <div class="card-content">
+            <div class="card-body">
+              {% if thread.image.url != None %}
+              <img style="width:100%; height:180px" class="card-img img-fluid mb-4" src="{{thread.image.url}}"
+                   alt="Card image cap">
+              {% else %}
+              <img style="width:100%; height:180px" class="card-img img-fluid mb-4"
+                   src="{% static 'images/noimage.jpg' %}" alt="Card image cap">
+              {% endif %}
+
+              <h4 class="card-title">{{thread.title|truncatechars:25}}</h4>
+              <p class="card-text">{{thread.mini_detail|truncatechars:20}}</p>
+              <a href="{% url 'forums:thread_detail' thread.id %}" class="btn btn-primary">Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock content %}

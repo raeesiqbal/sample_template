@@ -1,0 +1,148 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Register User | {% endblock title %}
+
+{% block content %}
+<div class="container">
+	<form class="sign-in-form needs-validation" action="{% url 'users:register' %}" method="post" novalidate>
+		{% csrf_token %}
+
+		<div class="card">
+			<div class="card-body">
+				<a href="{% url 'main:home' %}" class="brand text-center d-block m-b-20">
+					<img src="{% static 'img/logo.png'%}" alt="QuantumPro Logo" />
+				</a>
+
+				{% if message %}
+				<div style="text-align: center;" class="alert alert-danger" role="alert">
+					{{message}}
+				</div>
+				{% endif %}
+
+				<h5 class="sign-in-heading text-center m-b-20">Create an account</h5>
+
+				<div class="form-group">
+					<label for="username" class="sr-only">Username</label>
+					<input name="name" type="text" id="username" class="form-control" placeholder="Username" required>
+				</div>
+
+				<div class="form-group">
+					<label for="first_name" class="sr-only">First Name</label>
+					<input name="first_name" type="text" id="first_name" class="form-control" placeholder="First Name" required>
+				</div>
+
+				<div class="form-group">
+					<label for="username" class="sr-only">Username</label>
+					<input name="name" type="text" id="username" class="form-control" placeholder="Username" required>
+					<label for="last_name" class="sr-only">Last Name</label>
+					<input name="last_name" type="text" id="last_name" class="form-control" placeholder="Last Name" required>
+				</div>
+
+				<div class="form-group">
+					<label for="first_name" class="sr-only">First Name</label>
+					<input name="first_name" type="text" id="first_name" class="form-control" placeholder="First Name" required>
+				</div>
+				<div class="form-group">
+					<label for="last_name" class="sr-only">Last Name</label>
+					<input name="last_name" type="text" id="last_name" class="form-control" placeholder="Last Name" required>
+				</div>
+				<div class="form-group">
+					<label for="inputEmail" class="sr-only">Email Address</label>
+					<input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email Address" required>
+				</div>
+
+				<div class="form-group">
+					<label for="inputPassword" class="sr-only">Password</label>
+					<input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+					<input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+				</div>
+
+				<div class="form-group">
+					<label for="inputPassword" class="sr-only">Confirm Password</label>
+					<input name="confirmation" type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm Password" required>
+					<input name="confirmation" type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm Password" required>
+				</div>
+
+				<div class="form-group">
+					<div class="form-check">
+						<input checked class="form-check-input" type="radio" name="usertype" id="flexRadioDefault1" value="Other">
+						<label class="form-check-label" for="flexRadioDefault1">
+							Other
+						</label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-check-input" id="r2" type="radio" name="usertype" value="Student">
+						<label class="form-check-label" for="r2">
+							Signup as Student
+						</label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-check-input" id="r1" type="radio" name="usertype" value="teacher">
+						<label class="form-check-label" for="r1">
+							Signup as Teacher
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group subject">
+					<label for="level">Choose Subject</label>
+					<select required name="subject" id="level" class="form-control">
+						{% for subject in subjects %}
+						<option selected value="{{subject.title}}">{{subject.title}}</option>
+						{% endfor %}
+					</select>
+				</div>
+
+				<button class="btn btn-primary btn-rounded btn-floating btn-lg btn-block" type="submit">
+					Create My Account
+				</button>
+
+				<p class="text-muted m-t-25 m-b-0 p-0">Already have an account?<a href="{% url 'users:login' %}">Sign In</a></p>
+			</div>
+		</div>
+	</form>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script src="../assets/vendor/modernizr/modernizr.custom.js"></script>
+<script src="../assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/vendor/js-storage/js.storage.js"></script>
+<script src="../assets/vendor/js-cookie/src/js.cookie.js"></script>
+<script src="../assets/vendor/pace/pace.js"></script>
+<script src="../assets/vendor/metismenu/dist/metisMenu.js"></script>
+<script src="../assets/vendor/switchery-npm/index.js"></script>
+<script src="../assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+<!-- ================== GLOBAL APP SCRIPTS ==================-->
+<script src="../assets/js/global/app.js"></script>
+<script src="{% static 'sign/assets/vendor/modernizr/modernizr.custom.js' %}"></script>
+<script src="{% static 'sign/assets/vendor/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'sign/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'sign/assets/vendor/js-storage/js.storage.js' %}"></script>
+<script src="{% static 'sign/assets/vendor/js-cookie/src/js.cookie.js' %}"></script>
+<script src="{% static 'sign/assets/vendor/pace/pace.js' %}"></script>
+<script src="{% static 'sign/assets/vendor/metismenu/dist/metisMenu.js' %}"></script>
+<script src="{% static 'sign/assets/vendor/switchery-npm/index.js' %}"></script>
+<script src="{% static 'sign/assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+<script src="{% static 'sign/assets/js/global/app.js' %}"></script>
+
+<script>
+	$(document).ready(function() {
+		$(".subject").hide();
+		$("#r1").click(function() {
+			$(".subject").show();
+		});
+		$("#r2").click(function() {
+			$(".subject").hide();
+		});
+		$("#r3").click(function() {
+			$(".subject").hide();
+		});
+	});
+</script>
+{% endblock javascript %}

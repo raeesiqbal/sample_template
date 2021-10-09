@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+<header class="page-header fit-mobile">
+  <div class="d-flex align-items-center">
+    <div class="mr-auto">
+      <h1 class="separator">Research Details</h1>
+      {% if request.user.id == research.user.id %}
+      <h1 class="separator"><a href="{% url 'research:edit_research' research.id %}">Edit Research</a></h1>
+      <h1 class="separator"><a href="{% url 'research:delete_research' research.id %}">Delete Research</a></h1>
+      {% endif %}
+      <nav class="breadcrumb-wrapper" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'main:home' %}"><i class="icon dripicons-home"></i></a></li>
+          <li class="breadcrumb-item active" aria-current="page">Detail Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<section class="page-content container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <h5 class="card-header">{{research.title}}</h5>
+        <div class="card-body">
+          {% if research.main_image.url != None %}
+          <img style="width:600px; height:400px" src="{{research.main_image.url}}" alt="" class="float-left rounded m-r-30 m-b-30">
+          {% else %}
+          <p>no image </p>
+          {% endif %}
+          <p>{{research.content|safe}}</p>
+        </div>
+        <p class="card-body">Research File:   <a href="{{research.file.url}}">{{research.file}}</a></p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock content %}

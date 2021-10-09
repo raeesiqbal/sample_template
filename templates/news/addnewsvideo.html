@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="page-content container-fluid">
+  <form  action="{% url 'news:save_news_video' id%}" method="post", enctype="multipart/form-data">
+		{% csrf_token %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card" data-widget="dropzone">
+        <h5 class="card-header">upload your News video </h5>
+        <div class="card-body min-h-300">
+          <div class="form-group col-md-6">
+            <label for="title">Video Title</label>
+            <input required name="title" type="text" class="form-control" id="title" placeholder="Title">
+          </div>
+          <div class="class="dropzone" id="singleFileUpload"">
+            <div class="dz-message needsclick singleFileUpload">
+              <i class="icon dripicons-cloud-upload gradient-1"></i>
+              <div class="d-block text-center">
+                <input name="video" type="file" id="exampleFormControlFile1">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+    </form>
+</section>
+
+{% endblock content %}

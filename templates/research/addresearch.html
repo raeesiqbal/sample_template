@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<section class="page-content container-fluid">
+  <form action="{% url 'research:save_research' %}" method="post" , enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <h5 class="card-header">Add your Project Details</h5>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="title">Title</label>
+                <input autocomplete="off" required name="title" type="text" class="form-control" id="title" placeholder="Title">
+              </div>
+              <div class="form-group col-6">
+                <label for="mainimage">Main image</label>
+                <input required name="mainimage" type="file" class="form-control-file btn-floating " id="mainimage">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label for="topic">Topic</label>
+                <select required name="topic" id="topic" class="form-control">
+                  <option value="" selected>Choose...</option>
+                  {% for topic in Topics %}
+                  <option  value="{{topic.title}}">{{topic.title}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="form-group col-6">
+                <label for="file">File if any</label>
+                <input name="file" type="file" class="form-control-file btn-floating " id="file">
+              </div>
+              </div>
+            <div id="details">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <div class="card">
+                    <h5 class="card-header">Details</h5>
+                    <form>
+                      <div class="card-body">
+                        <form>
+                          <textarea required name="editor1" id="editor1" class="cke_wrapper" rows="10" cols="80">
+                        </textarea>
+                        </form>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button id = 'sub' type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+{% endblock content %}
